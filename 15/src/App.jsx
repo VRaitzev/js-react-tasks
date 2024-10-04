@@ -25,9 +25,40 @@ const themes = [
 ];
 
 class App extends React.Component {
-  // BEGIN (write your solution here)
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTheme: themes[0].className,
+    };
+  }
 
-  // END
+  Switcher = (e) => {
+    const themeId = parseInt(e.currentTarget.value, 10);
+    const selectedTheme = themes.find((theme) => theme.id === themeId);
+    this.setState({ activeTheme: selectedTheme.className });
+  };
+
+  render() {
+    return (
+      <ThemeContext.Provider
+        value={{
+          themes: themes,
+          state: this.state,
+          Switcher: this.Switcher,
+        }}
+      >
+        <ThemeSwitcher />
+        <Tabs>
+          <Tab eventKey="login" title="Login">
+            <Home />
+          </Tab>
+          <Tab eventKey="registration" title="Registration">
+            <Profile />
+          </Tab>
+        </Tabs>
+      </ThemeContext.Provider>
+    );
+  }
 }
 
 export default App;
